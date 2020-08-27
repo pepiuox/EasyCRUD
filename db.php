@@ -1,9 +1,9 @@
 <?php
 
 define('DBHOST', 'localhost');
-define('DBUSER', 'user');
-define('DBPASS', 'password');
-define('DBNAME', 'database_name');
+define('DBUSER', 'root');
+define('DBPASS', 'truelove');
+define('DBNAME', 'login_system');
 $link = new mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
 
     /* If connection fails for some reason */

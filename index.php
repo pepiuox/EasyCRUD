@@ -156,7 +156,7 @@ if (file_exists($file)) {
                             </div>
                             <div class="w-100">
                                 <?php
-                                $tmpfile = $tble . '.php';
+                                $tmpfile = 'tmp/' . $tble . '.php';
                                 if (file_exists($tmpfile)) {
                                     unlink($tmpfile);
                                 }
@@ -189,7 +189,7 @@ if (file_exists($file)) {
                                 $nvals = $c->addTPost($tble, $idCol);
                                 $mpty = $c->ifMpty($tble, $idCol);
 
-                                $tmpfile = $tble . '.php';
+                                $tmpfile = 'tmp/' . $tble . '.php';
                                 $myfile = fopen("$tmpfile", "w") or die("Unable to open file!");
                                 $start = '<?php' . "\n";
 
@@ -215,7 +215,7 @@ if (file_exists($file)) {
 
                                 file_put_contents($tmpfile, $actual);
 
-                                include $tble . '.php';
+                                include 'tmp/' . $tble . '.php';
                                 //get add form
                                 $c->addItem($tble, $idCol);
                                 ?>
@@ -246,7 +246,7 @@ if (file_exists($file)) {
                                 $ecols = $c->updateData($tble, $idCol);
                                 $mpty = $c->ifMpty($tble, $idCol);
 
-                                $tmpfile = $tble . '.php';
+                                $tmpfile = 'tmp/' . $tble . '.php';
                                 $myfile = fopen("$tmpfile", "w") or die("Unable to open file!");
                                 $content = '<?php' . "\n";
                                 $content .= '//This is temporal file only for add new row' . "\n";
@@ -273,7 +273,7 @@ if (file_exists($file)) {
 
                                 file_put_contents($tmpfile, $actual);
 
-                                include $tble . '.php';
+                                include 'tmp/' . $tble . '.php';
 
                                 $c->editItem($tble, $id, $idCol);
                                 ?>
