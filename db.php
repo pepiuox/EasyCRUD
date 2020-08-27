@@ -2,8 +2,8 @@
 
 define('DBHOST', 'localhost');
 define('DBUSER', 'root');
-define('DBPASS', 'truelove');
-define('DBNAME', 'login_system');
+define('DBPASS', 'password');
+define('DBNAME', 'easy_crud');
 $link = new mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
 
     /* If connection fails for some reason */
