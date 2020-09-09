@@ -60,7 +60,7 @@ if (file_exists($file)) {
     }
 
     $view = protect($_GET['view']);
-    include 'easycrud_class.php';
+    include 'EasyCRUD.php';
     $c = new EasyCRUD();
     ?>
     <!DOCTYPE html>
