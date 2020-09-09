@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `page` (
             echo '</div>';
             echo "<script>
 window.setTimeout(function() {
-    window.location.href = 'index.php?view=select.php';
+    window.location.href = 'index.php?view=select';
 }, 3000);
 </script>";
         } else {
