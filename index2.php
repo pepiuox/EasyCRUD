@@ -57,7 +57,6 @@ function getID($tble) {
     }
 }
 
-
 $view = protect($_GET['view']);
 ?>
 <!DOCTYPE html>
@@ -65,22 +64,22 @@ $view = protect($_GET['view']);
     <head>
         <meta charset = "UTF-8" name = "viewport" content = "width-device=width, initial-scale=1" />    
         <title><?php
-            if (isset($_GET['tbl'])) {
-                $titleTbl = str_replace("_", " ", protect($_GET['tbl']));
-            }
+if (isset($_GET['tbl'])) {
+    $titleTbl = str_replace("_", " ", protect($_GET['tbl']));
+}
 
-            if ($view === "select") {
-                echo 'Select your table - PHP CRUD';
-            } elseif ($view === "list") {
-                echo 'List ' . $titleTbl . ' - PHP CRUD';
-            } elseif ($view === "add") {
-                echo 'Add ' . $titleTbl . ' - PHP CRUD';
-            } elseif ($view === "edit") {
-                echo 'Edit ' . $titleTbl . ' - PHP CRUD';
-            } elseif ($view === "delete") {
-                echo 'Delete ' . $titleTbl . ' - PHP CRUD';
-            }
-            ?></title>
+if ($view === "select") {
+    echo 'Select your table - PHP CRUD';
+} elseif ($view === "list") {
+    echo 'List ' . $titleTbl . ' - PHP CRUD';
+} elseif ($view === "add") {
+    echo 'Add ' . $titleTbl . ' - PHP CRUD';
+} elseif ($view === "edit") {
+    echo 'Edit ' . $titleTbl . ' - PHP CRUD';
+} elseif ($view === "delete") {
+    echo 'Delete ' . $titleTbl . ' - PHP CRUD';
+}
+?></title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -227,7 +226,6 @@ $view = protect($_GET['view']);
 
                             $idCol = getID($tble);
 
-
                             /* Init loop */
 
                             if (mysqli_num_fields($addResult) > 0) {
@@ -264,44 +262,44 @@ $view = protect($_GET['view']);
                     </div>
                 </div>
             </div>
-            <?php
-            /* Edid data in the selected table */
-        } elseif ($view == "edit") {
-            if (!empty(protect($_GET['tbl'])) || !empty(protect($_GET['id']))) {
-                $tble = protect($_GET['tbl']);
-                $id = protect($_GET['id']);
-                $idCol = getID($tble);
-                ?>
+    <?php
+    /* Edid data in the selected table */
+} elseif ($view == "edit") {
+    if (!empty(protect($_GET['tbl'])) || !empty(protect($_GET['id']))) {
+        $tble = protect($_GET['tbl']);
+        $id = protect($_GET['id']);
+        $idCol = getID($tble);
+        ?>
                 <div class="container">
                     <div class="row">
                         <div class="w-100">
-                            <?php
-                            echo '<h2><a href="index.php?view=list" class="btn btn-primary">Back to list</a> Edit ' . $tble . '</h2>';
-                            ?>
+        <?php
+        echo '<h2><a href="index.php?view=list" class="btn btn-primary">Back to list</a> Edit ' . $tble . '</h2>';
+        ?>
                         </div>
                         <div class="w-100">
-                            <?php
-                            echo '<form class="form-horizontal">
+        <?php
+        echo '<form class="form-horizontal">
 <fieldset>
 
 <!-- Form Name -->
 <legend>' . $tble . '</legend>';
 
-                            $editQuery = "SELECT * FROM $tble WHERE ";
-                            $editQuery .= $idCol . "=" . $id;
+        $editQuery = "SELECT * FROM $tble WHERE ";
+        $editQuery .= $idCol . "=" . $id;
 
-                            $editResult = $link->query($editQuery);
+        $editResult = $link->query($editQuery);
 
-                            if (mysqli_num_fields($editResult) > 0) {
-                                $editmetas = $editResult->fetch_fields();
-                                $rqu = $editResult->fetch_array();
-                                foreach ($editmetas as $editmeta) {
-                                    $remp = str_replace("_", " ", $editmeta->name);
+        if (mysqli_num_fields($editResult) > 0) {
+            $editmetas = $editResult->fetch_fields();
+            $rqu = $editResult->fetch_array();
+            foreach ($editmetas as $editmeta) {
+                $remp = str_replace("_", " ", $editmeta->name);
 
-                                    if ($editmeta->name === $idCol) {
-                                        continue;
-                                    } else {
-                                        echo '<!-- Text input-->
+                if ($editmeta->name === $idCol) {
+                    continue;
+                } else {
+                    echo '<!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">' . ucfirst($remp) . '</label>  
   <div class="col-md-4">
@@ -309,76 +307,76 @@ $view = protect($_GET['view']);
   <small class="form-text text-muted">' . ucfirst($remp) . '</small>  
   </div>
 </div>';
-                                    }
-                                }
-                            }
-                            echo '<!-- Button -->
+                }
+            }
+        }
+        echo '<!-- Button -->
 <div class="form-group">  
   <div class="col-md-4">
     <button id="editrow" name="editrow" class="btn btn-primary">Edit</button>
   </div>
 </div>';
-                            echo '</fieldset>
+        echo '</fieldset>
 </form>';
-                            ?>
+        ?>
 
                         </div>
                     </div>
                 </div>
-                <?php
-            } else {
-                header("Location: index.php?view=select");
-            }
+        <?php
+    } else {
+        header("Location: index.php?view=select");
+    }
 
-            /* detele data in the selected table */
-        } elseif ($view == "delete") {
-            if (!empty(protect($_GET['tbl'])) || !empty(protect($_GET['id']))) {
-                $tble = protect($_GET['tbl']);
-                $id = protect($_GET['id']);
-                $idCol = getID($tble);
-                ?>
+    /* detele data in the selected table */
+} elseif ($view == "delete") {
+    if (!empty(protect($_GET['tbl'])) || !empty(protect($_GET['id']))) {
+        $tble = protect($_GET['tbl']);
+        $id = protect($_GET['id']);
+        $idCol = getID($tble);
+        ?>
                 <div class="container">
                     <div class="row">
                         <div class="w-100">
-                            <?php
-                            echo '<h2><a href="index.php?view=list" class="btn btn-primary">Back to list</a> Delete ' . $tble . '</h2>';
-                            ?>
+        <?php
+        echo '<h2><a href="index.php?view=list" class="btn btn-primary">Back to list</a> Delete ' . $tble . '</h2>';
+        ?>
                         </div>
                         <div class="w-100">
-                            <?php
-                            $deletequery = "SELECT * FROM $tble WHERE $idCol = '$id' ";
-                            $deleteresult = $link->query($deletequery);
-                            echo '<form role="form" id="delete_' . $tble . '" method="POST">
+        <?php
+        $deletequery = "SELECT * FROM $tble WHERE $idCol = '$id' ";
+        $deleteresult = $link->query($deletequery);
+        echo '<form role="form" id="delete_' . $tble . '" method="POST">
                         <legend>' . $tble . '</legend>' . "\n";
-                            $deletemetas = $deleteresult->fetch_fields();
-                            $drow = $deleteresult->fetch_array();
+        $deletemetas = $deleteresult->fetch_fields();
+        $drow = $deleteresult->fetch_array();
 
-                            foreach ($deletemetas as $deletemeta) {
-                                $cdta = $drow[$deletemeta->name];
-                                if ($deletemeta->name === $idCol) {
-                                    continue;
-                                } else {
-                                    $remp = str_replace("_", " ", $deletemeta->name);
-                                    echo '<div class="form-group">
+        foreach ($deletemetas as $deletemeta) {
+            $cdta = $drow[$deletemeta->name];
+            if ($deletemeta->name === $idCol) {
+                continue;
+            } else {
+                $remp = str_replace("_", " ", $deletemeta->name);
+                echo '<div class="form-group">
                        <label for="' . $deletemeta->name . '">' . ucfirst($remp) . ':</label>
                        <input type="text" class="form-control" id="' . $deletemeta->name . '" name="' . $deletemeta->name . '" value="' . $cdta . '" readonly>
                   </div>' . "\n";
-                                }
-                            }
-                            echo '<div class="form-group">
+            }
+        }
+        echo '<div class="form-group">
              <button type = "submit" id="deleterow" name="deleterow" class="btn btn-primary"><span class = "glyphicon glyphicon-plus"></span> Delete</button>
          </div>' . "\n";
-                            echo '</form>' . "\n";
-                        }
-                        ?>
+        echo '</form>' . "\n";
+    }
+    ?>
                     </div>
                 </div>
             </div>
-            <?php
-        } else {
-            header("Location: index.php?view=select");
-        }
-        ?>
+    <?php
+} else {
+    header("Location: index.php?view=select");
+}
+?>
 
     </body>
 </html>

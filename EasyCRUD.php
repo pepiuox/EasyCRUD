@@ -11,9 +11,16 @@
  */
 class EasyCRUD {
 
-// view list 
-    function viewList($tble) {
+    private $link;
+
+    public function __construct() {
         global $link;
+        $this->link = $link;
+    }
+
+// view list 
+    public function viewList($tble) {
+
         /* Start pagination */
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
@@ -31,7 +38,7 @@ class EasyCRUD {
         $limit = 20;
         $offset = ($page - 1) * $limit;
         $sql = "SELECT * FROM $tble LIMIT $offset, $limit";
-        $result = $link->query($sql);
+        $result = $this->link->query($sql);
         $i = 0;
         while ($i < mysqli_num_fields($result)) {
             $meta = mysqli_fetch_field($result);
@@ -82,7 +89,7 @@ class EasyCRUD {
                         $page = 1;
                     }
                     $query = "SELECT * FROM $tble";
-                    $rs_result = $db->query($query);
+                    $rs_result = $this->link->query($query);
                     $row = $rs_result->fetchAll();
                     $total_records = count($row);
 
@@ -108,10 +115,10 @@ class EasyCRUD {
                         }
                         ?>>
                             <a class='page-link' <?php
-                            if ($page > 1) {
-                                echo "href='" . DIR_REL . "?page=$previous_page'";
-                            }
-                            ?>>Previous</a>
+                               if ($page > 1) {
+                                   echo "href='" . DIR_REL . "?page=$previous_page'";
+                               }
+                               ?>>Previous</a>
                         </li>
                         <?php
                         if ($total_no_of_pages <= $range) {
@@ -192,15 +199,15 @@ class EasyCRUD {
     }
 
 //add item
-    function addItem($tble, $idCol) {
-        global $link;
+    public function addItem($tble, $idCol) {
+
         echo '<form class="form-horizontal">
 <fieldset>
 
 <!-- Form Name -->
 <legend>' . $tble . '</legend>';
         $addQuery = 'SELECT * FROM ' . $tble;
-        $addResult = $link->query($addQuery);
+        $addResult = $this->link->query($addQuery);
 
         /* Init loop */
 
@@ -234,8 +241,8 @@ class EasyCRUD {
     }
 
 // editItem
-    function editItem($tble, $id, $idCol) {
-        global $link;
+    public function editItem($tble, $id, $idCol) {
+
         echo '<form class="form-horizontal">
 <fieldset>
 
@@ -245,7 +252,7 @@ class EasyCRUD {
         $editQuery = "SELECT * FROM $tble WHERE ";
         $editQuery .= $idCol . "=" . $id;
 
-        $editResult = $link->query($editQuery);
+        $editResult = $this->link->query($editQuery);
 
         if (mysqli_num_fields($editResult) > 0) {
             $editmetas = $editResult->fetch_fields();
@@ -278,9 +285,9 @@ class EasyCRUD {
     }
 
 //deleteItem
-    function deleteItem($tble, $id, $idCol) {
+    public function deleteItem($tble, $id, $idCol) {
         $deletequery = "SELECT * FROM $tble WHERE $idCol = '$id' ";
-        $deleteresult = $link->query($deletequery);
+        $deleteresult = $this->link->query($deletequery);
         echo '<form role="form" id="delete_' . $tble . '" method="POST">
                         <legend>' . $tble . '</legend>' . "\n";
         $deletemetas = $deleteresult->fetch_fields();
@@ -305,10 +312,10 @@ class EasyCRUD {
     }
 
 //addpost
-    function addPost($tble, $ncol) {
-        global $link;
+    public function addPost($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $r = 0;
         $varnames = array();
         while ($r < mysqli_num_fields($result)) {
@@ -326,10 +333,10 @@ class EasyCRUD {
     }
 
 //addttl
-    function addTtl($tble, $ncol) {
-        global $link;
+    public function addTtl($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $checkd = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -344,10 +351,10 @@ class EasyCRUD {
     }
 
 //addtpost
-    function addTPost($tble, $ncol) {
-        global $link;
+    public function addTPost($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $checkd = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -361,10 +368,10 @@ class EasyCRUD {
     }
 
 //ifempty
-    function ifEmpty($tble, $ncol) {
-        global $link;
+    public function ifEmpty($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $checkd = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -379,10 +386,10 @@ class EasyCRUD {
     }
 
 //ifmpty
-    function ifMpty($tble, $ncol) {
-        global $link;
+    public function ifMpty($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $checkd = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -397,10 +404,10 @@ class EasyCRUD {
     }
 
 //updatedata
-    function updateData($tble, $ncol) {
-        global $link;
+    public function updateData($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $varnames = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -414,10 +421,10 @@ class EasyCRUD {
         return implode(", ", $varnames);
     }
 
-    function supdateData($tble) {
-        global $link;
+    public function supdateData($tble) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $varnames = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -428,10 +435,10 @@ class EasyCRUD {
         echo implode(", ", $varnames);
     }
 
-    function supdateD($tble) {
-        global $link;
+    public function supdateD($tble) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $varnames = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -442,10 +449,10 @@ class EasyCRUD {
         echo implode(", ", $varnames);
     }
 
-    function addReq($tble, $ncol) {
-        global $link;
+    public function addReq($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $r = 0;
         $varnames = '';
         while ($r < mysqli_num_fields($result)) {
@@ -458,10 +465,10 @@ class EasyCRUD {
         }
     }
 
-    function addReqch($tble, $ncol) {
-        global $link;
+    public function addReqch($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $checkd = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -475,10 +482,10 @@ class EasyCRUD {
         return implode(" , ", $checkd);
     }
 
-    function addvTtl($tble, $ncol) {
-        global $link;
+    public function addvTtl($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
         $checkd = array();
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -492,10 +499,10 @@ class EasyCRUD {
         return implode(" , ", $checkd);
     }
 
-    function sValues($tble, $ncol) {
-        global $link;
+    public function sValues($tble, $ncol) {
+
         $query = "SELECT * FROM " . $tble;
-        $result = $link->query($query);
+        $result = $this->link->query($query);
 
         $r = 0;
         while ($r < mysqli_num_fields($result)) {
@@ -507,5 +514,4 @@ class EasyCRUD {
             $r = $r + 1;
         }
     }
-
 }
