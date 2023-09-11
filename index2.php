@@ -99,17 +99,17 @@ $view = protect($_GET['view']);
             <div class="container">
                 <div class = "row">	
                     <div class="col-md-6">
-                        <h3 id="fttl">Form </h3>
+                        <h3>Form </h3>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <script>
                                 $(function () {
-                                    $("#selecttb").change(function () {
+                                    $("#selecttb").change(function (e) {
+                                        e.preventDefault();
                                         var selecttb = $(this).val();
                                         //var path = $(location).attr('href');                        
                                         var url = 'index.php?view=list&tbl=' + selecttb;
-                                        $('#fttl').text('Form ' + selecttb);
                                         window.location.replace(url);
                                     });
                                 });
